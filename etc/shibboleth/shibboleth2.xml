@@ -13,8 +13,7 @@ https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPConfiguration
     clockSkew="1800">
 
     <!-- The entityID is the name TestShib made for your SP. -->
-    <ApplicationDefaults entityID="https://ubustone.cern.ch:5000/shibboleth"
-        REMOTE_USER="eppn">
+    <ApplicationDefaults entityID="https://ubustone.cern.ch/shibboleth">
 
         <!-- You should use secure cookies if at all possible.  See cookieProps in this Wiki article. -->
         <!-- https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPSessions -->
@@ -67,6 +66,7 @@ https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPConfiguration
         <CredentialResolver type="File" key="sp-key.pem" certificate="sp-cert.pem"/>
 
     </ApplicationDefaults>
+    
     <!-- Security policies you shouldn't change unless you know what you're doing. -->
     <SecurityPolicyProvider type="XML" validate="true" path="security-policy.xml"/>
 
