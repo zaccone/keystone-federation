@@ -1,0 +1,6 @@
+# Rename to settings.py
+HEADERS = {
+    'Content-type': 'application/json',
+    'X-Auth-Token': 'your admin token here'
+}
+URL = "your-host-here"
