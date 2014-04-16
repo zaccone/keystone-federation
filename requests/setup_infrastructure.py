@@ -156,7 +156,7 @@ class Infrastructure(object):
 
     def delete_idp(self):
         url = self._url('/v3/OS-FEDERATION/identity_providers/' + self.IDP)
-        resp = requests.delete(url, headers=self.HEADERS)
+        resp = requests.delete(url, headers=self.HEADERS, verify=False)
         if self._check_response(resp, 204):
             print "IdP %(idp)s deleted." % {'idp': self.IDP}
         else:
@@ -174,7 +174,7 @@ class Infrastructure(object):
 
     def delete_mapping(self):
         url = self._url('/v3/OS-FEDERATION/mappings/' + self.MAPPING)
-        resp = requests.delete(url, headers=self.HEADERS)
+        resp = requests.delete(url, headers=self.HEADERS, verify=False)
         if self._check_response(resp, 204):
             print "Mapping %(mapping)s deleted." % {'mapping': self.MAPPING}
         else:
@@ -210,7 +210,7 @@ class Infrastructure(object):
         protocol_data = copy.deepcopy(fixtures.PROTOCOL)
         protocol_data['protocol']['mapping_id'] = self.MAPPING
         resp = requests.put(url, headers=self.HEADERS,
-                            data = json.dumps(protocol_data))
+                            data = json.dumps(protocol_data), verify=False)
         if self._check_response(resp, 201):
             print "Protocol %(protocol)s added and tied" % {'protocol':
                                                             self.PROTOCOL}
