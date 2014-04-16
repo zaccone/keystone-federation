@@ -169,6 +169,7 @@ class Infrastructure(object):
                          data=json.dumps(idp_body), verify=False)
         if self._check_response(resp, 201):
             print "IdP %(idp)s added." % {'idp': self.IDP}
+            self.IDP = resp.json().get('identity_provider')
         else:
             self._expose_reason(resp)
 
@@ -188,6 +189,7 @@ class Infrastructure(object):
                             verify=False)
         if self._check_response(resp, 201):
             print "Mapping %(map)s created" % {'map': self.MAPPING}
+            self.MAPPING = resp.json().get('mapping')
         else:
             self._expose_reason(resp)
 
@@ -205,15 +207,17 @@ class Infrastructure(object):
 
     def add_protocol(self):
         url = self._url('/v3/OS-FEDERATION/identity_providers/%(idp)s/'
-                        'protocols/%(protocol)s' % {'idp': self.IDP,
+                        'protocols/%(protocol)s' % {'idp': self.IDP['id'],
                                                     'protocol': self.PROTOCOL})
         protocol_data = copy.deepcopy(fixtures.PROTOCOL)
-        protocol_data['protocol']['mapping_id'] = self.MAPPING
+        protocol_data['protocol']['mapping_id'] = self.MAPPING['id']
         resp = requests.put(url, headers=self.HEADERS,
                             data = json.dumps(protocol_data), verify=False)
         if self._check_response(resp, 201):
             print "Protocol %(protocol)s added and tied" % {'protocol':
                                                             self.PROTOCOL}
+            pdb.set_trace()
+            self.PROTOCOL = resp.json().get('protocol')
         else:
             self._expose_reason(resp)
 
@@ -238,30 +242,53 @@ class Infrastructure(object):
         title = "Federation objects:"
         result = [title]
 
+        idp = """Identity Provider:
+        id: %(id)s
+        """ % {'id': self.IDP['id']}
+        result.append(idp)
+
+        mapping = """Mapping:
+        id: %(id)s
+        rules: %(rules)s
+        """ % {
+        'id': self.MAPPING['id'],
+        'rules': self.MAPPING['rules']
+        }
+        result.append(mapping)
+        pdb.set_trace()
+        protocol = """Protocol:
+        id: %(id)s
+        mapping: %(mapping)s
+        """ % {
+            'id': self.PROTOCOL['id'],
+            'mapping': self.PROTOCOL['mapping_id']
+        }
+        result.append(protocol)
+
         project = """PROJECT:
         id: %(id)s
-        name %(name)s
+        name: %(name)s
         """ % {'id': self.PROJECT['id'],
                 'name': self.PROJECT['name']}
         result.append(project)
 
         group = """GROUP:
         id: %(id)s
-        name %(name)s
+        name: %(name)s
         """ % {'id': self.GROUP['id'],
                 'name': self.GROUP['name']}
         result.append(group)
 
         domain = """DOMAIN:
         id: %(id)s
-        name %(name)s
+        name: %(name)s
         """ % {'id': self.DOMAIN['id'],
                 'name': self.DOMAIN['name']}
         result.append(domain)
 
         role = """ROLE:
         id: %(id)s
-        name %(name)s
+        name: %(name)s
         """ % {'id': self.ROLE['id'],
                 'name': self.ROLE['name']}
         result.append(role)
