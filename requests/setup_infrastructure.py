@@ -2,13 +2,12 @@
 
 import copy
 import json
-import requests
-import pdb
 import uuid
 import sys
 
-import fixtures
+import requests
 
+import fixtures
 try:
     import settings
 except ImportError:
@@ -216,7 +215,6 @@ class Infrastructure(object):
         if self._check_response(resp, 201):
             print "Protocol %(protocol)s added and tied" % {'protocol':
                                                             self.PROTOCOL}
-            pdb.set_trace()
             self.PROTOCOL = resp.json().get('protocol')
         else:
             self._expose_reason(resp)
@@ -255,7 +253,6 @@ class Infrastructure(object):
         'rules': self.MAPPING['rules']
         }
         result.append(mapping)
-        pdb.set_trace()
         protocol = """Protocol:
         id: %(id)s
         mapping: %(mapping)s
