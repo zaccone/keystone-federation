@@ -17,14 +17,14 @@ PROTOCOL = {
     }
 }
 
-RULE = { 
-    "mapping": { 
+RULE = {
+    "mapping": {
         "rules":[
             {
                 "local": [
                     {
                         "user": {
-                            "name": "{0}"
+                            "name": "testhib user"
                         }
                     },
                     {
