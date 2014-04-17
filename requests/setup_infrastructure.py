@@ -184,7 +184,7 @@ class Infrastructure(object):
         url = self._url('/v3/OS-FEDERATION/mappings/' + self.MAPPING)
         rules = self._assign_group_to_rule()
         resp = requests.put(url, headers=self.HEADERS,
-                            data=json.dumps(fixtures.RULE),
+                            data=json.dumps(rules),
                             verify=False)
         if self._check_response(resp, 201):
             print "Mapping %(map)s created" % {'map': self.MAPPING}
