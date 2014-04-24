@@ -13,7 +13,7 @@ IDP = {
 
 PROTOCOL = {
     "protocol": {
-        "mapping_id": "myself"
+        "mapping_id": None
     }
 }
 

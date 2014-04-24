@@ -47,7 +47,8 @@ class Infrastructure(object):
     def _assign_group_to_rule(self):
         rules = copy.deepcopy(fixtures.RULE)
         gid = self.GROUP['id']
-        rules['mapping']['rules'][0]['local'][1]['group']['id'] = gid
+        if rules['mapping']['rules'][0]['local'][1]['group']['id'] is None:
+            rules['mapping']['rules'][0]['local'][1]['group']['id'] = gid
         return rules
 
     def _get_id(self, url, name, attribute, dest):
@@ -103,7 +104,8 @@ class Infrastructure(object):
     def add_project(self):
         url = self._url('/v3/projects')
         body = copy.deepcopy(fixtures.PROJECT)
-        body['project']['domain_id'] = self.DOMAIN['id']
+        if body['project']['domain_id'] is None:
+            body['project']['domain_id'] = self.DOMAIN['id']
         resp = requests.post(url, headers=self.HEADERS,
                          data=json.dumps(body), verify=False)
         if self._check_response(resp, 201):
@@ -209,7 +211,8 @@ class Infrastructure(object):
                         'protocols/%(protocol)s' % {'idp': self.IDP['id'],
                                                     'protocol': self.PROTOCOL})
         protocol_data = copy.deepcopy(fixtures.PROTOCOL)
-        protocol_data['protocol']['mapping_id'] = self.MAPPING['id']
+        if protocol_data['protocol']['mapping_id'] is None:
+            protocol_data['protocol']['mapping_id'] = self.MAPPING['id']
         resp = requests.put(url, headers=self.HEADERS,
                             data = json.dumps(protocol_data), verify=False)
         if self._check_response(resp, 201):
