@@ -39,10 +39,11 @@ class Infrastructure(object):
         return r.status_code == expected_status
 
     def _expose_reason(self, r):
-        print "ERR: status code: %(err_code)d, response body: %(response)s" % {
-            'err_code': r.status_code,
-            'response': r.text
-        }
+        print ("ERR: status code: %(err_code)d, "
+               "response body: %(response)s") % {
+                    'err_code': r.status_code,
+                    'response': r.text
+             }
 
     def _assign_group_to_rule(self):
         rules = copy.deepcopy(fixtures.RULE)
@@ -86,7 +87,9 @@ class Infrastructure(object):
 
     def add_groups(self):
         url = self._url('/v3/groups')
-        body = fixtures.GROUP
+        body = copy.deepcopy(fixtures.GROUP)
+        if body['group']['domain_id'] is None:
+            body['group']['domain_id'] = self.DOMAIN['id']
         resp = requests.post(url, headers=self.HEADERS,
                          data=json.dumps(body), verify=False)
         if self._check_response(resp, 201):

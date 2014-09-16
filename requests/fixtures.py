@@ -28,9 +28,9 @@ RULE = {
                         }
                     },
                     {
-                    	"group": {
-                    		"id": None
-                    	}
+                        "group": {
+                            "id": None
+                        }
                     }
                 ],
                 "remote": [
@@ -49,10 +49,10 @@ RULE = {
 
 PROJECT = {
     "project": {
-    	"description": "Project for federation test",
-    	"domain_id": None,
-    	"enabled": True,
-    	"name": "federation project"
+        "description": "Project for federation test",
+        "domain_id": None,
+        "enabled": True,
+        "name": "federation project"
     }
 }
 
@@ -67,6 +67,7 @@ DOMAIN = {
 GROUP = {
     "group": {
         "description": "federation group",
-        "name": "fedgroup"
+        "name": "fedgroup",
+        "domain_id": None
     }
 }
